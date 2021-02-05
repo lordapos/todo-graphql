@@ -1,4 +1,4 @@
-const { buildSchema } = require('graphql')
+const {buildSchema} = require('graphql')
 
 module.exports = buildSchema(`
     type Todo {
@@ -11,5 +11,13 @@ module.exports = buildSchema(`
 
     type Query {
     getTodos: [Todo!]!
+  }
+  
+  input TodoInput {
+    title: String!
+  }
+  
+  type Mutation {
+    createTodo(todo: TodoInput!): Todo!
   }
 `)
