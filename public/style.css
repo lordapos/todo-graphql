@@ -1,0 +1,18 @@
+.done {
+  text-decoration: line-through;
+}
+
+.v-card
+{
+  min-height: 100vh;
+}
+
+.col-sm-12
+{
+  padding: 0 12px;
+}
+
+header.v-toolbar
+{
+  padding-top: 10px;
+}

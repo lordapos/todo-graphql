@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Todo list</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css'>
+	<link rel='stylesheet' href='./vuetify.min.css'>
+	<!--	<link rel='stylesheet' href='./materialdesignicons.min.css'>-->
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900'>
+	<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<div id="app">
+	<v-app>
+		<v-main>
+			<v-theme-provider root :dark="isDark">
+					<v-row justify="center">
+						<v-col xs="12" sm="12">
+							<v-card>
+								<v-toolbar color="blue darken-4" dark>
+									<v-toolbar-side-icon></v-toolbar-side-icon>
+									<v-toolbar-title class="headline">Todo App</v-toolbar-title>
+
+									<v-spacer></v-spacer>
+
+									<v-tooltip bottom>
+										<template v-slot:activator="{ on }">
+											<v-btn icon @click="isDark = !isDark" v-on="on">
+												<v-icon v-model="isDark">
+													{{ !isDark ? 'mdi-weather-night' : 'mdi-weather-cloudy' }}
+												</v-icon>
+											</v-btn>
+										</template>
+										<span>
+										  {{ isDark ? 'light mode' : 'dark mode' }}
+										</span>
+									</v-tooltip>
+								</v-toolbar>
+
+								<v-list two-line subheader>
+									<v-subheader class="headline">{{day}}, {{date}}{{ord}} {{year}}</v-subheader>
+									<p class="mx-12 text-right"><b>{{todos.length}}</b> Tasks</p>
+
+									<v-list-item>
+										<v-list-item-content>
+											<v-list-item-title>
+
+												<v-text-field v-model="newTodo" id="newTodo" name="newTodo"
+															  label="Type your task" @keyup.enter="addTodo"/>
+											</v-list-item-title>
+										</v-list-item-content>
+									</v-list-item>
+
+								</v-list>
+
+								<v-list subheader two-line flat>
+									<v-subheader class="subheading" v-if="todos.length == 0">You have 0 Tasks, add
+										some
+									</v-subheader>
+									<v-subheader class="subheading" v-else="todos.length == 1">Your Tasks</v-subheader>
+
+									<v-list-item-group>
+										<v-list-item v-for="(todo, i) in todos">
+											<template #default="{ active, toggle }">
+												<v-list-item-action>
+
+													<v-checkbox
+															v-model="todo.done"
+															@change="completeTodo(todo.id)"
+													>
+													</v-checkbox>
+												</v-list-item-action>
+
+												<v-list-item-content>
+													<v-list-item-title :class="{
+													  done: todo.done
+													  }">{{ todo.title | capitalize }}
+													</v-list-item-title>
+													<v-list-item-subtitle>
+														Created: {{ todo.createdAt | date(true) }}
+														(Updated: {{ todo.updatedAt | date(true) }})
+													</v-list-item-subtitle>
+												</v-list-item-content>
+												<v-btn fab ripple small color="red" v-if="todo.done"
+													   @click="removeTodo(todo.id)">
+													<v-icon class="white--text">mdi-close</v-icon>
+												</v-btn>
+											</template>
+										</v-list-item>
+									</v-list-item-group>
+								</v-list>
+							</v-card>
+						</v-col>
+					</v-row>
+			</v-theme-provider>
+		</v-main>
+	</v-app>
+</div>
+<!-- partial -->
+<script src='./vue.min.js'></script>
+<script src='./vuetify.min.js'></script>
+<script src="./script.js"></script>
+</body>
+</html>
